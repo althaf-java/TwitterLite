@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:tal="http://xml.zope.org/namespaces/tal"
+        xmlns:metal="http://xml.zope.org/namespaces/metal"
+		metal:define-macro="layout">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="${request.static_url('birdie:static/favicon.ico')}">
+    
+	<title>Birdie</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="${request.static_url('birdie:static/css/bootstrap.css')}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="${request.static_url('birdie:static/jumbotron.css')}" rel="stylesheet">
+	
+	<more metal:define-slot="head-more" />
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="${view.app_url}/about"><span class="glyphicon glyphicon-map-marker"></span> Birdie</a>
+        </div>
+        <div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li>
+					<a href="${view.app_url}"><span class="glyphicon glyphicon-home"></span> Home</a>
+				</li>
+				<li>
+					<a tal:condition="view.logged_in is not None"
+						href="${view.app_url}/${view.logged_in}"><span class="glyphicon glyphicon-user"></span> My Birdie</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+	 			<li tal:condition="view.logged_in is not None">
+					<a href="${view.app_url}/logout"><span class="glyphicon glyphicon-log-out"></span> Logout (${view.logged_in})</a>
+				</li>
+				<li tal:condition="view.logged_in is None">
+					<a href="${view.app_url}/login"><span class="glyphicon glyphicon-log-in"></span> Sign In</a>
+				</li>				
+			</ul>        
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+		<div class="container">
+			<div metal:define-slot="content-top" />
+		</div>
+	</div>
+
+    <div class="container">
+	    <div metal:define-slot="content-bottom" />
+      <hr>
+
+      <footer>
+        <p>&copy; Polytech Nantes 2013</p>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="${request.static_url('birdie:static/js/bootstrap.min.js')}"></script>
+  </body>
+</html>

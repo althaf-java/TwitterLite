@@ -1,0 +1,62 @@
+<div metal:use-macro="view.layout">
+   	<div metal:fill-slot="content-top" tal:omit-tag="">
+		<div class="row">
+        	<div class="col-md-8">
+				<h1>Birdie</h1>
+        		<div class="lead">Birdie V0.1 is a micro-blogging demo app for educational purpose</div>
+			</div>
+        	<div class="col-md-4 text-right">
+				<br />
+				<span class="text-right" vertical-align="baseline"><a href="${view.app_url}/about" class="btn btn-primary btn-lg text-right" role="button">Learn more &raquo;</a>
+			</div>
+		</div>
+
+		<div class="panel panel-info">
+			<div class="panel-heading"><span class="glyphicon glyphicon-stats"></span> Figures</div>
+		    <div class="panel-body">
+			    <table class="table table-striped">
+					<tbody>
+					    <tr>
+					    	<td>Users</td>
+					      	<td><span class="badge pull-right">${users_count}</span></td>
+					    </tr>
+					    <tr>
+					      	<td>Chirps</td>
+					      	<td><span class="badge pull-right">${chirps_count}</span> </td>
+					    </tr>
+					</tbody>
+				</table>
+		    </div>	
+		</div>
+	</div>
+
+  	<div metal:fill-slot="content-bottom" tal:omit-tag="">
+		<div class="well well-sm" tal:condition="latest_users is not None">
+  		    
+			<span class="label label-default">Latest users <span class="glyphicon glyphicon-pushpin"></span></span>
+		  	<div tal:repeat="user latest_users" tal:omit-tag="">
+				<a href="${view.app_url}/${user}/view" class="btn btn-info btn-xs">@${user}</a>
+			</div>		
+		</div>
+	
+		<h1>Public Timeline</h1>
+		<div class="row">
+	    	<div class="col-lg-4" tal:repeat="chirp chirps">        
+		    	<div class="panel panel-default">
+					<div class="panel-heading">
+						<a href="${view.app_url}/${chirp.author.username}/view">${chirp.author.fullname}</a>
+						<span class="text-muted">@${chirp.author.username}</span>
+						<div tal:condition="user is not None" tal:omit-tag="">
+							<a href="${view.app_url}/${chirp.author.username}/follow" role="button" class="btn btn-success btn-xs pull-right" tal:condition="chirp.author.username not in user.friends and chirp.author.username!=user.username">follow</a>
+							<a href="${view.app_url}/${chirp.author.username}/unfollow" role="button" class="btn btn-danger btn-xs pull-right" tal:condition="chirp.author.username in user.friends">unfollow</a>
+						</div>
+					</div>
+					<div class="panel-body">
+	                	${chirp.chirp}
+						<span class="badge pull-right">${elapsed(chirp.timestamp)}</span>
+	              	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

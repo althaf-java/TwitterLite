@@ -1,0 +1,21 @@
+<div metal:use-macro="view.layout">
+    <more tal:omit-tag="" metal:fill-slot="head-more">
+		<link rel="stylesheet" type="text/css" href="${request.static_url('birdie:static/signin.css')	}"/>
+    </more>
+   <div metal:fill-slot="content-bottom" tal:omit-tag="">
+      <form class="form-signin" action="${view.app_url}/join" method="POST">
+		<div class="alert-warning">${message}</div>
+        <h2 class="form-signin-heading">Register Birdie</h2>
+	    <input type="hidden" name="came_from" value="${came_from}"/>
+        <input type="text" class="form-control" name="fullname" value="${fullname}" placeholder="Full name" required autofocus />
+        <input type="text" class="form-control" name="username" value="${username}" placeholder="Username" required />
+        <input type="password" class="form-control" name="password" value="" placeholder="Password" required />
+        <input type="password" class="form-control" name="confirm" value="" placeholder="Confirm password" required />
+
+        <textarea class="form-control" name="about" placeholder="About">${about}</textarea>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" name="form.submitted">Sign up</button>
+      </form>
+  </div>
+</div>
+

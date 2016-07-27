@@ -1,0 +1,71 @@
+<div metal:use-macro="view.layout">
+   	<div metal:fill-slot="content-top" tal:omit-tag="">
+        <h1>About Birdie</h1>
+		<p class="lead"><em>Python</em>, <em>Pyramid</em> and <em>Twitter Bootstrap</em> are the main ingredients of the soup. This flavor is powered by a standard SQL backend. </p>
+	</div>
+
+  	<div metal:fill-slot="content-bottom">
+		<h1>Behind the scene</h1>
+		<p>A few words about the architecture and other technical stuff regarding the Birdie implementation.</p>
+
+		<h2>The Overall Architecture</h2>
+
+		<p>
+			The Birdie app follows a simple but efficient MVC scheme where
+			<ul>
+				<li>The data model is defined in the <code>birdie/models.py</code> file</li>
+				<li>Controllers are called <i>views</i> and are functions defined in the <code>birdie/views.py</code> file</li>
+				<li>Views are HTML templates rendered by the templating engine Chameleon. They are available in the <code>templates</code> directory as <code>*.pt</code> files</li>
+		</ul>
+		</p>
+
+		<p>
+			To operate that scheme, a client (browser) requests for a given URL to the web server (waitress here). Let's take http://www.birdie.com/login as a running example. It, in turn, resolves the URL b.t.w. of a URL dispatch mechanism that maps the right route from a set of declared <i>URL pattern to route</i>. For instance, it maps "Log in" to the previous URL.
+		</p>	
+		<p>	Next, routes are themselves mapped to view functions such that the right function is called each time the corresponding route is mapped. For instance the <code>login()</code> function has been associated to route "Log in" and is going to be executed. What is the function for ? It basically prepares the data used for rendering the HTML page. It may check for constraints and requirements, query the database, implement algorithms, call third-party libraries for data processing, etc. At the end, it returns a dictionary of pairs variable-value that are consumed by the templating engine to render the HTML page. Of course, the right template (<code>templates/login.pt</code> file for instance) is associated to the view function.
+		</p>
+		<p>To sum up, the app is made of triples (route, view, template) and the workflow starts by a given URL that is translated to a route; the associated view function is then fired and it returns data to fill the HTML template and generate the web page.  	
+		</p>
+		
+		<h2>The Model</h2>
+
+		<p>
+			Birdie supports SQLite as the database backend and SQLAlchemy as the Python library to communicate with the database.
+			The model is made of 2 entities User and Chirp, and an association table for the followers.
+		</p>	
+		<p>	
+			The very simple model widely use declarative Object-Relational Mapping (ORM) mode of SQLAlchemy to map
+			python classes to tables, and object instances to (set of) records.
+		</p>
+		<p>	
+			There is a One-to-Many relationship between Chirp and User to get the author of a given chirp, and a Many-to-Many self-relationship from/to User, to build the social network (followers/friends).
+		</p>
+
+		<h2>The Comprehensive List of Queries</h2>
+		
+		<h3>Read-only queries</h3>
+		<ul>
+			<li>Count of all registered users</li>
+			<li>Count of all chirps</li>
+			<li>Latest k registered users</li>
+			<li>Latest k chirps</li>
+			<li>@username's infos</li>
+			<li>Authenticated user's infos</li>
+			<li>Authenticated user's friends</li>
+			<li>Authenticated user's followers</li>
+			<li>Authenticated user's chirps</li>
+			<li>Latest k chirps from friends of authenticated user</li>
+			<li>Log in registered user</li>
+		</ul>
+
+		<h3>Write queries</h3>
+		<ul>
+			<li>Register new user (with uniqueness on the @username)</li>
+			<li>Add chirp from authenticated user</li>			
+			<li>Add friend to authenticated user</li>	
+		</ul>
+
+
+
+	</div>
+</div>

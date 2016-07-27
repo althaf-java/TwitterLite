@@ -1,0 +1,5 @@
+<div metal:use-macro="view.layout">
+   	<div metal:fill-slot="content-top" tal:omit-tag="">
+        <p>You are lost.</p>
+ 	</div>
+</div>
