@@ -1,0 +1,11 @@
+0.0
+---
+
+-  Initial version
+
+0.1
+---
+
+- Added Twitter Bootstrap Templating framework
+- Refactored project from scratch within Pyramid sqlalchemy scaffold
+- Updated the all app logic (views)
